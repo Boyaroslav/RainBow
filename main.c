@@ -2,10 +2,14 @@
 #include<unistd.h>
 #include<string.h>
 #include<stdlib.h>
+#include <fcntl.h>
 #include<wchar.h>
 #include<locale.h>
 #include <time.h>
-
+#include <sys/wait.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 // красный оранжевый желтый зеленый голубой синий фиолетовый
 
 
@@ -92,19 +96,36 @@ void print_file(FILE *b){
 
 }
 
-
+buffer[100];
+// 1 - stdout
 int main(int argc, char **argv){
-    if(argc <= 1){
-        fprintf(stdout, "NO INPUT. ABORT\n");
-    }
+    setlocale(LC_ALL, ""); // utf-8
 
     srand(time(NULL)); 
 
-
-
-    setlocale(LC_ALL, ""); // utf-8
     indC = rand() % 7;
     init();
+
+    fd_set rfds;
+    struct timeval tv;
+    int retval;
+    wchar_t bw;
+
+	
+     if(argc <= 1){
+        fprintf(stdout, "NO INPUT. ABORT\n");
+        exit(0);
+        
+    }
+    short is_gb = 0;
+    if (argv[1][0] == '-' && argv[1][1] == 'g' && argv[1][2] == 'b'){
+                    while(read(0, buffer, 4) > 0){
+                print_char(buffer, bw);} is_gb=1;
+
+    
+    }
+
+
 
     // starting from red
     //for(int argi=0; argi < argc; argi++){
@@ -123,7 +144,7 @@ int main(int argc, char **argv){
         //print_file(text);
     }
     else{ // костыль #1
-        for(int i=1; i<argc; i++){
+        for(int i=1+is_gb; i<argc; i++){
 
 
             print_char(argv[i], wchrn);
