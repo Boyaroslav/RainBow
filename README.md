@@ -6,6 +6,8 @@ Usage:
 
     rb Text Second Text etc ...
 
+    some program | rb -gb - it works like grep
+
 Installation:
 
     make
