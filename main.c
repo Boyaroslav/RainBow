@@ -56,6 +56,7 @@ void print_char(char *s, wchar_t *p){ // its also changes colors
                     init();
                 }
             }
+            bf[i-1] = '\0';
   
         } 
     }
@@ -109,7 +110,7 @@ int main(int argc, char **argv){
     fd_set rfds;
     struct timeval tv;
     int retval;
-    wchar_t bw;
+    wchar_t *bw;
 
 	
      if(argc <= 1){
@@ -119,8 +120,9 @@ int main(int argc, char **argv){
     }
     short is_gb = 0;
     if (argv[1][0] == '-' && argv[1][1] == 'g' && argv[1][2] == 'b'){
-                    while(read(0, buffer, 4) > 0){
-                print_char(buffer, bw);} is_gb=1;
+                while(read(0, buffer, 8) > 0){
+
+                print_char(&buffer, bw); for(int i=0; i<100; i++){buffer[i] = '\0';}} is_gb=1;
 
     
     }
